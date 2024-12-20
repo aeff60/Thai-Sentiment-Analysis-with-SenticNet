@@ -1,0 +1,32 @@
+# Python specific
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.log
+
+# Environment
+.env
+*.env
+venv/
+env/
+.idea/
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Model and data outputs
+*.npz
+*.h5
+*.ckpt
+*.csv
+
+# Ignore SenticNet2_Thai.txt manually
+!SenticNet2_Thai.txt

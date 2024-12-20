@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thai Sentiment Prediction</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- ลิงก์ไปยัง CSS -->
+  </head>
+  <body>
+    <div class="container">
+      <h1>Thai Sentiment Prediction</h1>
+      <form id="predictionForm" class="form-card">
+        <label for="sentence">Enter Thai Sentence:</label><br />
+        <textarea
+          id="sentence"
+          name="sentence"
+          rows="4"
+          cols="50"
+          placeholder="ใส่ประโยคภาษาไทย..."
+          required
+        ></textarea
+        ><br /><br />
+        <button type="button" onclick="predictSentiment()">Predict</button>
+      </form>
+      <h2 id="result"></h2>
+    </div>
+    <script>
+      async function predictSentiment() {
+        const sentence = document.getElementById("sentence").value;
+
+        if (!sentence) {
+          document.getElementById("result").textContent =
+            "Please enter a Thai sentence.";
+          return;
+        }
+
+        try {
+          const response = await fetch("http://localhost:5000/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ sentence }),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            document.getElementById(
+              "result"
+            ).textContent = `Error: ${errorData.error}`;
+          } else {
+            const data = await response.json();
+            document.getElementById("result").textContent = `Sentence: "${
+              data.sentence
+            }"\nPredicted Polarity Value: ${data.prediction.toFixed(4)}`;
+          }
+        } catch (error) {
+          document.getElementById(
+            "result"
+          ).textContent = `Error: ${error.message}`;
+        }
+      }
+    </script>
+  </body>
+</html>
